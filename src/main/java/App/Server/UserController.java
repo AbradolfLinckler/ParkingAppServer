@@ -13,13 +13,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
+
 public class UserController {
   @Autowired
   private UserRepo userRepository;
+  @Autowired
+  private MongoTemplate mongoTemplate;
+
   @GetMapping("/")
   public List<User> GetUsers(){
     return userRepository.findAll();
@@ -30,7 +38,14 @@ public class UserController {
   }
   @PostMapping("/register")
   public User PostMapping(@RequestBody User user){
-    return userRepository.save(user);
+    Query query = new Query();
+    query.addCriteria(Criteria.where("username").is(user.getUsername()));
+    List<User> users = mongoTemplate.find(query,User.class);
+    if(users.size()>0){
+      user.setUsername("na");
+      return user;
+    }
+    else return userRepository.save(user);
   }
   @PostMapping("/login")
   public User PostLogin(@RequestBody User user){
