@@ -1,5 +1,7 @@
 package App.Server;
 
+import java.util.ArrayList;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,5 +24,8 @@ public class User {
   private String address;
   private String mobileNumber;
   private String vehicleNumber;
+  private ArrayList<String> bookings;
+  private ArrayList<String> extraServices;
+  private ArrayList<Integer> cost;
 
 }

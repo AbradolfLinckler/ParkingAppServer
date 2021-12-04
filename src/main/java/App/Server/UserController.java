@@ -19,7 +19,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/user")
 @CrossOrigin
 
 public class UserController {
