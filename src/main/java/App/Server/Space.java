@@ -17,6 +17,7 @@ public class Space {
   @Id
   private String id;
   private int spaceNumber;
+  private String worker;
   private ArrayList<String> bookings;
   
 }

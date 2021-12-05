@@ -18,5 +18,6 @@ public class Worker {
   private double rating;
   private int numOfRatings;
   private int workingSince;
+  private String space;
 
 }

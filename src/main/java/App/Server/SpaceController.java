@@ -40,8 +40,8 @@ public class SpaceController {
     List<Space> availableSpaces=new ArrayList<Space>();
     for(int i=0;i<allSpaces.size();i++){
       Boolean f=true;
-      Space slot=allSpaces.get(i); //gets a slot
-      ArrayList<String> slotBookings=slot.getBookings(); //gets bookings arraylist of the slot
+      Space slot=allSpaces.get(i); //selects a slot
+      ArrayList<String> slotBookings=slot.getBookings(); //gets bookings array of the slot
       for(int j=0;j<slotBookings.size();j++){ //iterate through the bookings of the slot
         if(spaceQuery.equals(slotBookings.get(j))) f=false; // checks if a particular booming exists or not
       }
@@ -74,6 +74,22 @@ public class SpaceController {
   @DeleteMapping("/{id}")
   public void RemoveSpace(@PathVariable String id){
     spaceRepository.deleteById(id);
+  }
+
+  @PostMapping("/addworker")
+  public Space AddWorker(@RequestBody Worker worker){
+    Query query = new Query();
+    query.addCriteria(Criteria.where("spaceNumber").is(worker.getSpace()));
+    List<Space> spaces = mongoTemplate.find(query,Space.class);
+    Space updatedSpace=new Space();
+    if(spaces.size()>0){
+      Space space=spaces.get(0);
+      updatedSpace = spaceRepository.findById(space.getId()).orElse(null);
+      updatedSpace.setWorker(worker.getName());
+      spaceRepository.deleteById(space.getId());
+      return spaceRepository.save(updatedSpace);      
+    }
+    return updatedSpace;
   }
 
 }
