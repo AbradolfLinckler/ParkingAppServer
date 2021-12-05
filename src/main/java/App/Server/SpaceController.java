@@ -58,7 +58,7 @@ public class SpaceController {
   }
 
   @PostMapping("/update")
-  public Space UpdateSpace(@RequestBody Space newBooking){
+  public Space UpdateSpace(@RequestBody Space newBooking) {
     Space oldBooking = spaceRepository.findById(newBooking.getId()).orElse(null);
     ArrayList<String> newbookings=newBooking.getBookings();
     ArrayList<String> oldbookings=oldBooking.getBookings();
@@ -69,6 +69,11 @@ public class SpaceController {
     oldBooking.setBookings(totalbookings);
     spaceRepository.deleteById(newBooking.getId());
     return spaceRepository.save(oldBooking);
+  }
+
+  @DeleteMapping("/{id}")
+  public void RemoveSpace(@PathVariable String id){
+    spaceRepository.deleteById(id);
   }
 
 }

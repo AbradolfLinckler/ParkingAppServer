@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Space {
   @Id
   private String id;
-  private int slotNumber;
+  private int spaceNumber;
   private ArrayList<String> bookings;
   
 }
